@@ -26,11 +26,12 @@ export default function Index() {
           </div>
           
           <h1 className="text-6xl md:text-8xl font-display font-bold text-gradient-primary leading-tight">
-            Luxe Magazine
+            E-CELL CALCUTTA BUSINESS SCHOOL
           </h1>
           
           <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Experience stories that inspire. Immerse yourself in premium digital narratives crafted with elegance and passion.
+            Experience stories that inspire
+            Your Idea, Our Platform
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-8">
@@ -90,7 +91,7 @@ export default function Index() {
 
       {/* Footer */}
       <footer className="border-t border-border/50 py-8 text-center text-sm text-muted-foreground">
-        <p>© 2024 Luxe Magazine. Experience stories that inspire.</p>
+        <p>© 2025 E-CELL CBS. Experience stories that inspire.</p>
       </footer>
     </div>
   );
