@@ -91,7 +91,7 @@ export default function Feed() {
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <div className="flex items-center gap-2">
             <Sparkles className="h-6 w-6 text-accent" />
-            <h1 className="text-3xl font-display text-gradient-primary">Luxe Magazine</h1>
+            <h1 className="text-3xl font-display text-gradient-primary">E-CELL CBS</h1>
           </div>
           <div className="flex gap-2">
             {isAdmin && (
