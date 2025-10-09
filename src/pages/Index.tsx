@@ -1,14 +1,97 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { supabase } from '@/integrations/supabase/client';
+import { Button } from '@/components/ui/button';
+import { Sparkles, BookOpen, Users, Zap } from 'lucide-react';
 
-const Index = () => {
+export default function Index() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Check if user is already logged in
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) {
+        navigate('/feed');
+      }
+    });
+  }, [navigate]);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen flex flex-col">
+      {/* Hero Section */}
+      <main className="flex-1 flex items-center justify-center px-4 py-20">
+        <div className="max-w-4xl mx-auto text-center space-y-8">
+          <div className="inline-flex items-center justify-center p-2 mb-4">
+            <Sparkles className="h-16 w-16 text-accent animate-pulse" />
+          </div>
+          
+          <h1 className="text-6xl md:text-8xl font-display font-bold text-gradient-primary leading-tight">
+            Luxe Magazine
+          </h1>
+          
+          <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            Experience stories that inspire. Immerse yourself in premium digital narratives crafted with elegance and passion.
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center pt-8">
+            <Button
+              size="lg"
+              onClick={() => navigate('/auth')}
+              className="bg-primary hover:bg-primary/90 glow-primary text-lg px-8 py-6"
+            >
+              <BookOpen className="mr-2 h-5 w-5" />
+              Start Reading
+            </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              onClick={() => navigate('/auth')}
+              className="border-accent/50 hover:bg-accent/10 text-lg px-8 py-6"
+            >
+              <Users className="mr-2 h-5 w-5" />
+              Join Community
+            </Button>
+          </div>
+
+          {/* Features */}
+          <div className="grid md:grid-cols-3 gap-8 pt-20">
+            <div className="p-6 rounded-xl bg-card/50 border border-border/50 card-3d">
+              <div className="inline-flex p-3 rounded-lg bg-primary/10 mb-4">
+                <Sparkles className="h-6 w-6 text-primary" />
+              </div>
+              <h3 className="text-xl font-display font-semibold mb-2">Immersive 3D</h3>
+              <p className="text-muted-foreground">
+                Experience content in stunning 3D cards with smooth animations
+              </p>
+            </div>
+
+            <div className="p-6 rounded-xl bg-card/50 border border-border/50 card-3d">
+              <div className="inline-flex p-3 rounded-lg bg-accent/10 mb-4">
+                <Zap className="h-6 w-6 text-accent" />
+              </div>
+              <h3 className="text-xl font-display font-semibold mb-2">Real-time</h3>
+              <p className="text-muted-foreground">
+                See new stories, reactions, and comments appear instantly
+              </p>
+            </div>
+
+            <div className="p-6 rounded-xl bg-card/50 border border-border/50 card-3d">
+              <div className="inline-flex p-3 rounded-lg bg-primary/10 mb-4">
+                <BookOpen className="h-6 w-6 text-primary" />
+              </div>
+              <h3 className="text-xl font-display font-semibold mb-2">Premium Content</h3>
+              <p className="text-muted-foreground">
+                Curated stories designed to inspire and captivate
+              </p>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      {/* Footer */}
+      <footer className="border-t border-border/50 py-8 text-center text-sm text-muted-foreground">
+        <p>© 2024 Luxe Magazine. Experience stories that inspire.</p>
+      </footer>
     </div>
   );
-};
-
-export default Index;
+}
