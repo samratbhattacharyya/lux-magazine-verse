@@ -14,6 +14,22 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
 import { Loader2 } from 'lucide-react';
+import { z } from 'zod';
+
+const postSchema = z.object({
+  title: z.string()
+    .trim()
+    .min(1, 'Title is required')
+    .max(200, 'Title must not exceed 200 characters'),
+  content: z.string()
+    .trim()
+    .min(1, 'Content is required')
+    .max(10000, 'Content must not exceed 10,000 characters'),
+});
+
+const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB
+const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+const ALLOWED_VIDEO_TYPES = ['video/mp4', 'video/webm', 'video/quicktime'];
 
 interface CreatePostDialogProps {
   open: boolean;
@@ -34,6 +50,37 @@ export function CreatePostDialog({ open, onOpenChange }: CreatePostDialogProps) 
     setIsLoading(true);
 
     try {
+      // Validate post input
+      const validation = postSchema.safeParse({
+        title,
+        content,
+      });
+
+      if (!validation.success) {
+        const firstError = validation.error.errors[0];
+        toast.error(firstError.message);
+        setIsLoading(false);
+        return;
+      }
+
+      // Validate media file if provided
+      if (mediaFile) {
+        if (mediaFile.size > MAX_FILE_SIZE) {
+          toast.error('File size must not exceed 50MB');
+          setIsLoading(false);
+          return;
+        }
+
+        const isValidImage = ALLOWED_IMAGE_TYPES.includes(mediaFile.type);
+        const isValidVideo = ALLOWED_VIDEO_TYPES.includes(mediaFile.type);
+
+        if (!isValidImage && !isValidVideo) {
+          toast.error('File must be an image (JPEG, PNG, GIF, WebP) or video (MP4, WebM, MOV)');
+          setIsLoading(false);
+          return;
+        }
+      }
+
       let mediaUrl = null;
       let mediaType = null;
 
@@ -59,8 +106,8 @@ export function CreatePostDialog({ open, onOpenChange }: CreatePostDialogProps) 
 
       // Create post
       const { error } = await supabase.from('posts').insert({
-        title,
-        content,
+        title: validation.data.title,
+        content: validation.data.content,
         media_url: mediaUrl,
         media_type: mediaType,
         author_id: user.id,

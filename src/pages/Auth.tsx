@@ -7,6 +7,29 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { toast } from 'sonner';
 import { Loader2 } from 'lucide-react';
+import { z } from 'zod';
+
+const signUpSchema = z.object({
+  email: z.string().email('Invalid email address').max(255, 'Email too long'),
+  password: z.string()
+    .min(8, 'Password must be at least 8 characters')
+    .max(72, 'Password must not exceed 72 characters')
+    .regex(/[A-Z]/, 'Password must contain at least one uppercase letter')
+    .regex(/[a-z]/, 'Password must contain at least one lowercase letter')
+    .regex(/[0-9]/, 'Password must contain at least one number'),
+  username: z.string()
+    .min(3, 'Username must be at least 3 characters')
+    .max(30, 'Username must not exceed 30 characters')
+    .regex(/^[a-zA-Z0-9_]+$/, 'Username can only contain letters, numbers, and underscores'),
+  displayName: z.string()
+    .min(2, 'Display name must be at least 2 characters')
+    .max(100, 'Display name must not exceed 100 characters'),
+});
+
+const signInSchema = z.object({
+  email: z.string().email('Invalid email address'),
+  password: z.string().min(1, 'Password is required'),
+});
 
 export default function Auth() {
   const [isSignUp, setIsSignUp] = useState(false);
@@ -32,14 +55,29 @@ export default function Auth() {
 
     try {
       if (isSignUp) {
+        // Validate sign up input
+        const validation = signUpSchema.safeParse({
+          email: email.trim(),
+          password,
+          username: username.trim(),
+          displayName: displayName.trim(),
+        });
+
+        if (!validation.success) {
+          const firstError = validation.error.errors[0];
+          toast.error(firstError.message);
+          setIsLoading(false);
+          return;
+        }
+
         const { error } = await supabase.auth.signUp({
-          email,
+          email: email.trim(),
           password,
           options: {
             emailRedirectTo: `${window.location.origin}/`,
             data: {
-              username,
-              display_name: displayName,
+              username: username.trim(),
+              display_name: displayName.trim(),
             },
           },
         });
@@ -48,8 +86,21 @@ export default function Auth() {
         toast.success('Account created! You can now sign in.');
         setIsSignUp(false);
       } else {
+        // Validate sign in input
+        const validation = signInSchema.safeParse({
+          email: email.trim(),
+          password,
+        });
+
+        if (!validation.success) {
+          const firstError = validation.error.errors[0];
+          toast.error(firstError.message);
+          setIsLoading(false);
+          return;
+        }
+
         const { error } = await supabase.auth.signInWithPassword({
-          email,
+          email: email.trim(),
           password,
         });
 

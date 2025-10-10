@@ -8,6 +8,14 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { ArrowLeft, Heart, MessageCircle, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { formatDistanceToNow } from 'date-fns';
+import { z } from 'zod';
+
+const commentSchema = z.object({
+  content: z.string()
+    .trim()
+    .min(1, 'Comment cannot be empty')
+    .max(2000, 'Comment must not exceed 2,000 characters'),
+});
 
 interface Post {
   id: string;
@@ -181,14 +189,26 @@ export default function PostDetail() {
 
   const handleComment = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!user || !newComment.trim()) return;
+    if (!user) return;
 
     setIsSubmitting(true);
     try {
+      // Validate comment input
+      const validation = commentSchema.safeParse({
+        content: newComment,
+      });
+
+      if (!validation.success) {
+        const firstError = validation.error.errors[0];
+        toast.error(firstError.message);
+        setIsSubmitting(false);
+        return;
+      }
+
       const { error } = await supabase.from('comments').insert({
         post_id: id,
         user_id: user.id,
-        content: newComment.trim(),
+        content: validation.data.content,
       });
 
       if (error) throw error;
