@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Sparkles, BookOpen, Users, Zap } from 'lucide-react';
+import cbsLogo from '@/assets/cbs-logo.bmp';
 
 export default function Index() {
   const navigate = useNavigate();
@@ -18,6 +19,11 @@ export default function Index() {
 
   return (
     <div className="min-h-screen flex flex-col">
+      {/* Header with Logo */}
+      <header className="absolute top-0 left-0 p-6 z-10">
+        <img src={cbsLogo} alt="CBS Logo" className="h-16 w-auto" />
+      </header>
+
       {/* Hero Section */}
       <main className="flex-1 flex items-center justify-center px-4 py-20">
         <div className="max-w-4xl mx-auto text-center space-y-8">
