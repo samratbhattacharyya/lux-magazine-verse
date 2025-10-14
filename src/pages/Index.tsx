@@ -127,7 +127,7 @@ export default function Index() {
           </a>
         </div>
         <p>© 2025 E-CELL CBS. Experience stories that inspire.
-          Develop By Boostlytic.
+          Develop By Animesh.
         </p>
       </footer>
     </div>
