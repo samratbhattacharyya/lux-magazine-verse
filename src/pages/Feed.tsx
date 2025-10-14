@@ -6,11 +6,13 @@ import { Button } from '@/components/ui/button';
 import { LogOut, Sparkles } from 'lucide-react';
 import { PostCard } from '@/components/PostCard';
 import { toast } from 'sonner';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 interface Post {
   id: string;
   title: string;
   content: string;
+  category: string;
   media_url: string | null;
   media_type: string | null;
   created_at: string;
@@ -20,11 +22,23 @@ interface Post {
   };
 }
 
+const CATEGORIES = [
+  'All',
+  'Finance',
+  'Marketing',
+  'HR',
+  'Operations',
+  'Business Analytics',
+  'Technology',
+  'General',
+] as const;
+
 export default function Feed() {
   const { user, isAdmin, isLoading, signOut } = useAuth();
   const navigate = useNavigate();
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedCategory, setSelectedCategory] = useState('All');
 
   useEffect(() => {
     if (!isLoading && !user) {
@@ -53,17 +67,23 @@ export default function Feed() {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, []);
+  }, [selectedCategory]);
 
   const fetchPosts = async () => {
     try {
-      const { data, error } = await supabase
+      let query = supabase
         .from('posts')
         .select(`
           *,
           profiles:author_id (display_name, avatar_url)
         `)
         .order('created_at', { ascending: false });
+
+      if (selectedCategory !== 'All') {
+        query = query.eq('category', selectedCategory as any);
+      }
+
+      const { data, error } = await query;
 
       if (error) throw error;
       setPosts(data || []);
@@ -112,6 +132,20 @@ export default function Feed() {
       </header>
 
       <main className="container mx-auto px-4 py-8">
+        <Tabs value={selectedCategory} onValueChange={setSelectedCategory} className="mb-8">
+          <TabsList className="w-full overflow-x-auto flex-wrap h-auto bg-card/50 p-1">
+            {CATEGORIES.map((category) => (
+              <TabsTrigger
+                key={category}
+                value={category}
+                className="data-[state=active]:bg-accent data-[state=active]:text-accent-foreground"
+              >
+                {category}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+        </Tabs>
+
         {posts.length === 0 ? (
           <div className="text-center py-12">
             <p className="text-muted-foreground text-lg">

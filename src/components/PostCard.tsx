@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
 import { formatDistanceToNow } from 'date-fns';
 import { Eye } from 'lucide-react';
 
@@ -9,6 +10,7 @@ interface PostCardProps {
     id: string;
     title: string;
     content: string;
+    category: string;
     media_url: string | null;
     media_type: string | null;
     created_at: string;
@@ -50,9 +52,14 @@ export function PostCard({ post }: PostCardProps) {
         </div>
       )}
       <CardHeader>
-        <CardTitle className="font-display line-clamp-2 text-xl group-hover:text-gradient-primary transition-all">
-          {post.title}
-        </CardTitle>
+        <div className="flex items-start justify-between gap-2 mb-2">
+          <CardTitle className="font-display line-clamp-2 text-xl group-hover:text-gradient-primary transition-all flex-1">
+            {post.title}
+          </CardTitle>
+          <Badge variant="secondary" className="shrink-0">
+            {post.category}
+          </Badge>
+        </div>
       </CardHeader>
       <CardContent>
         <p className="text-sm text-muted-foreground line-clamp-3">{post.content}</p>

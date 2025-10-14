@@ -15,6 +15,13 @@ import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
 import { Loader2 } from 'lucide-react';
 import { z } from 'zod';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 const postSchema = z.object({
   title: z.string()
@@ -25,11 +32,22 @@ const postSchema = z.object({
     .trim()
     .min(1, 'Content is required')
     .max(10000, 'Content must not exceed 10,000 characters'),
+  category: z.string().min(1, 'Category is required'),
 });
 
 const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB
 const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
 const ALLOWED_VIDEO_TYPES = ['video/mp4', 'video/webm', 'video/quicktime'];
+
+const CATEGORIES = [
+  'Finance',
+  'Marketing',
+  'HR',
+  'Operations',
+  'Business Analytics',
+  'Technology',
+  'General',
+] as const;
 
 interface CreatePostDialogProps {
   open: boolean;
@@ -41,6 +59,7 @@ export function CreatePostDialog({ open, onOpenChange }: CreatePostDialogProps) 
   const [isLoading, setIsLoading] = useState(false);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [category, setCategory] = useState('General');
   const [mediaFile, setMediaFile] = useState<File | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -54,6 +73,7 @@ export function CreatePostDialog({ open, onOpenChange }: CreatePostDialogProps) 
       const validation = postSchema.safeParse({
         title,
         content,
+        category,
       });
 
       if (!validation.success) {
@@ -108,6 +128,7 @@ export function CreatePostDialog({ open, onOpenChange }: CreatePostDialogProps) 
       const { error } = await supabase.from('posts').insert({
         title: validation.data.title,
         content: validation.data.content,
+        category: validation.data.category as any,
         media_url: mediaUrl,
         media_type: mediaType,
         author_id: user.id,
@@ -119,6 +140,7 @@ export function CreatePostDialog({ open, onOpenChange }: CreatePostDialogProps) 
       onOpenChange(false);
       setTitle('');
       setContent('');
+      setCategory('General');
       setMediaFile(null);
     } catch (error: any) {
       toast.error(error.message || 'Failed to create post');
@@ -159,6 +181,21 @@ export function CreatePostDialog({ open, onOpenChange }: CreatePostDialogProps) 
               rows={6}
               className="bg-muted/50"
             />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="category">Category</Label>
+            <Select value={category} onValueChange={setCategory} required>
+              <SelectTrigger className="bg-muted/50">
+                <SelectValue placeholder="Select a category" />
+              </SelectTrigger>
+              <SelectContent>
+                {CATEGORIES.map((cat) => (
+                  <SelectItem key={cat} value={cat}>
+                    {cat}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
           <div className="space-y-2">
             <Label htmlFor="media">Media (Image or Video)</Label>
