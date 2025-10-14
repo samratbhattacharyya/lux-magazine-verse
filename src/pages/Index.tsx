@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
-import { Sparkles, BookOpen, Users, Zap } from 'lucide-react';
+import { Sparkles, BookOpen, Users, Zap, Facebook, Instagram, Linkedin } from 'lucide-react';
 import cbsLogo from '@/assets/cbs-logo.bmp';
 
 export default function Index() {
@@ -97,6 +97,35 @@ export default function Index() {
 
       {/* Footer */}
       <footer className="border-t border-border/50 py-8 text-center text-sm text-muted-foreground">
+        <div className="flex justify-center gap-6 mb-4">
+          <a 
+            href="https://www.facebook.com/share/19gS9EFzZ9/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="hover:text-primary transition-colors"
+            aria-label="Facebook"
+          >
+            <Facebook className="h-6 w-6" />
+          </a>
+          <a 
+            href="https://www.instagram.com/cbskolkataofficial?igsh=MThzZGMzN2Q2Y3J1bA==" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="hover:text-primary transition-colors"
+            aria-label="Instagram"
+          >
+            <Instagram className="h-6 w-6" />
+          </a>
+          <a 
+            href="https://www.linkedin.com/school/calcutta-business-school/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="hover:text-primary transition-colors"
+            aria-label="LinkedIn"
+          >
+            <Linkedin className="h-6 w-6" />
+          </a>
+        </div>
         <p>© 2025 E-CELL CBS. Experience stories that inspire.
           Develop By Boostlytic.
         </p>
