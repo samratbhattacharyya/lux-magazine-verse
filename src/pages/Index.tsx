@@ -230,7 +230,7 @@ export default function Index() {
             <Linkedin className="h-6 w-6" />
           </a>
         </div>
-        <p>© 2025 E-CELL CBS. Experience stories that inspire.
+        <p>© 2025 Vipanan+. Experience stories that inspire.
           Develop By Animesh.
         </p>
       </footer>
