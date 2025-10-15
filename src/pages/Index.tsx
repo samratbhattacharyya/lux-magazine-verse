@@ -231,7 +231,7 @@ export default function Index() {
           </a>
         </div>
         <p>© 2025 Vipanan+. Experience stories that inspire.
-          Develop By Animesh.
+          Develop By Animesh..
         </p>
       </footer>
     </div>
