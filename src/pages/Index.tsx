@@ -71,7 +71,7 @@ export default function Index() {
           </div>
           
           <h1 className="text-6xl md:text-8xl font-display font-bold text-gradient-primary leading-tight">
-            E-CELL CALCUTTA BUSINESS SCHOOL
+            Vipanan+ CALCUTTA BUSINESS SCHOOL
           </h1>
           
           <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
