@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Navigation } from '@/components/Navigation';
 import { toast } from 'sonner';
 import { Loader2 } from 'lucide-react';
 import { z } from 'zod';
@@ -117,14 +118,16 @@ export default function Auth() {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
+      <Navigation />
+      
       <Card className="w-full max-w-md card-3d border-border/50 bg-gradient-to-br from-card to-card/80">
         <CardHeader className="space-y-1">
           <CardTitle className="text-3xl font-display text-gradient-primary">
-            {isSignUp ? 'Join Luxe Magazine' : 'Welcome Back'}
+            {isSignUp ? 'Join E-CELL CBS' : 'Welcome Back'}
           </CardTitle>
           <CardDescription className="text-muted-foreground">
             {isSignUp
-              ? 'Create your account to start exploring immersive stories'
+              ? 'Create your account to start exploring inspiring stories'
               : 'Sign in to continue your journey'}
           </CardDescription>
         </CardHeader>

@@ -56,6 +56,66 @@ export type Database = {
           },
         ]
       }
+      events: {
+        Row: {
+          created_at: string
+          description: string
+          event_date: string
+          id: string
+          image_url: string | null
+          location: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description: string
+          event_date: string
+          id?: string
+          image_url?: string | null
+          location?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          event_date?: string
+          id?: string
+          image_url?: string | null
+          location?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      gallery: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          image_url: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       posts: {
         Row: {
           author_id: string

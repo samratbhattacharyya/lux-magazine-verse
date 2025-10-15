@@ -5,6 +5,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Navigation } from '@/components/Navigation';
 import { ArrowLeft, Heart, MessageCircle, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { formatDistanceToNow } from 'date-fns';
@@ -236,7 +237,9 @@ export default function PostDetail() {
 
   return (
     <div className="min-h-screen pb-12">
-      <header className="border-b border-border/50 bg-card/50 backdrop-blur-sm sticky top-0 z-10">
+      <Navigation />
+      
+      <header className="border-b border-border/50 bg-card/50 backdrop-blur-sm sticky top-0 z-10 pt-16">
         <div className="container mx-auto px-4 py-4">
           <Button variant="ghost" onClick={() => navigate(-1)}>
             <ArrowLeft className="mr-2 h-4 w-4" />

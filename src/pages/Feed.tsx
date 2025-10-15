@@ -5,6 +5,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { LogOut, Sparkles } from 'lucide-react';
 import { PostCard } from '@/components/PostCard';
+import { Navigation } from '@/components/Navigation';
 import { toast } from 'sonner';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
@@ -107,7 +108,9 @@ export default function Feed() {
 
   return (
     <div className="min-h-screen">
-      <header className="border-b border-border/50 bg-card/50 backdrop-blur-sm sticky top-0 z-10">
+      <Navigation />
+      
+      <header className="border-b border-border/50 bg-card/50 backdrop-blur-sm sticky top-0 z-10 pt-16">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <div className="flex items-center gap-2">
             <Sparkles className="h-6 w-6 text-accent" />
