@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import { Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -29,11 +29,11 @@ export function Navigation() {
         scrollToSection(sectionId);
       }
     } else {
-      // Navigate to home page first
-      navigate('/');
-      // Wait for navigation, then scroll
+      // Navigate to home page with state
       if (sectionId) {
-        setTimeout(() => scrollToSection(sectionId), 100);
+        navigate(path, { state: { scrollTo: sectionId } });
+      } else {
+        navigate(path);
       }
     }
   };
