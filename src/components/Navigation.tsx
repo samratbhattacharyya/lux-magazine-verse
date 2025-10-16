@@ -1,8 +1,18 @@
-import { NavigationMenu, NavigationMenuItem, NavigationMenuList, NavigationMenuLink, navigationMenuTriggerStyle } from '@/components/ui/navigation-menu';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { Menu } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from '@/components/ui/sheet';
 
 export function Navigation() {
   const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -12,6 +22,7 @@ export function Navigation() {
   };
 
   const handleNavigation = (path: string, sectionId?: string) => {
+    setOpen(false);
     if (window.location.pathname === '/') {
       // Already on home page, just scroll
       if (sectionId) {
@@ -28,41 +39,54 @@ export function Navigation() {
   };
 
   return (
-    <NavigationMenu className="fixed top-6 left-1/2 -translate-x-1/2 z-50 bg-background/80 backdrop-blur-md border border-border/50 rounded-full px-2">
-      <NavigationMenuList>
-        <NavigationMenuItem>
-          <NavigationMenuLink
-            className={navigationMenuTriggerStyle()}
-            onClick={() => navigate('/')}
+    <Sheet open={open} onOpenChange={setOpen}>
+      <SheetTrigger asChild>
+        <Button
+          variant="outline"
+          size="icon"
+          className="fixed top-6 right-6 z-50 bg-background/80 backdrop-blur-md border-border/50"
+        >
+          <Menu className="h-5 w-5" />
+        </Button>
+      </SheetTrigger>
+      <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+        <SheetHeader>
+          <SheetTitle>Menu</SheetTitle>
+        </SheetHeader>
+        <nav className="flex flex-col gap-4 mt-8">
+          <Button
+            variant="ghost"
+            className="justify-start text-lg"
+            onClick={() => {
+              navigate('/');
+              setOpen(false);
+            }}
           >
             Home
-          </NavigationMenuLink>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuLink
-            className={navigationMenuTriggerStyle()}
+          </Button>
+          <Button
+            variant="ghost"
+            className="justify-start text-lg"
             onClick={() => handleNavigation('/', 'about-us')}
           >
             About Us
-          </NavigationMenuLink>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuLink
-            className={navigationMenuTriggerStyle()}
+          </Button>
+          <Button
+            variant="ghost"
+            className="justify-start text-lg"
             onClick={() => handleNavigation('/', 'gallery')}
           >
             Gallery
-          </NavigationMenuLink>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuLink
-            className={navigationMenuTriggerStyle()}
+          </Button>
+          <Button
+            variant="ghost"
+            className="justify-start text-lg"
             onClick={() => handleNavigation('/', 'events')}
           >
             Events
-          </NavigationMenuLink>
-        </NavigationMenuItem>
-      </NavigationMenuList>
-    </NavigationMenu>
+          </Button>
+        </nav>
+      </SheetContent>
+    </Sheet>
   );
 }
