@@ -74,9 +74,9 @@ export function Navigation() {
           <Button
             variant="ghost"
             className="justify-start text-lg"
-            onClick={() => handleNavigation('/', 'gallery')}
+            onClick={() => handleNavigation('/', 'cbs-stories')}
           >
-            Gallery
+            CBS Stories
           </Button>
           <Button
             variant="ghost"

@@ -7,6 +7,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { format } from 'date-fns';
 import cbsLogo from '@/assets/cbs-logo.bmp';
 import { Navigation } from '@/components/Navigation';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 
 interface GalleryItem {
   id: string;
@@ -149,25 +150,31 @@ export default function Index() {
         </div>
       </section>
 
-      {/* Gallery Section */}
-      <section id="gallery" className="py-20 px-4">
+      {/* CBS Stories Section */}
+      <section id="cbs-stories" className="py-20 px-4">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl font-display font-bold text-gradient-primary text-center mb-12">Gallery</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {gallery.map((item) => (
-              <Card key={item.id} className="overflow-hidden card-3d">
-                <CardContent className="p-0">
-                  <img src={item.image_url} alt={item.title} className="w-full h-64 object-cover" />
-                  <div className="p-4">
-                    <h3 className="font-semibold text-lg mb-2">{item.title}</h3>
-                    {item.description && (
-                      <p className="text-sm text-muted-foreground">{item.description}</p>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+          <h2 className="text-4xl font-display font-bold text-gradient-primary text-center mb-12">CBS Stories</h2>
+          <Carousel className="w-full" opts={{ align: "start", loop: true }}>
+            <CarouselContent>
+              {gallery.map((item) => (
+                <CarouselItem key={item.id} className="md:basis-1/2 lg:basis-1/3">
+                  <Card className="overflow-hidden card-3d">
+                    <CardContent className="p-0">
+                      <img src={item.image_url} alt={item.title} className="w-full h-64 object-cover" />
+                      <div className="p-4">
+                        <h3 className="font-semibold text-lg mb-2">{item.title}</h3>
+                        {item.description && (
+                          <p className="text-sm text-muted-foreground">{item.description}</p>
+                        )}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious />
+            <CarouselNext />
+          </Carousel>
         </div>
       </section>
 
