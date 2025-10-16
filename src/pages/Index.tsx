@@ -70,8 +70,9 @@ export default function Index() {
             <Sparkles className="h-16 w-16 text-accent animate-pulse" />
           </div>
           
-          <h1 className="text-6xl md:text-8xl font-display font-bold text-gradient-primary leading-tight">
-            Vipanan+ CALCUTTA BUSINESS SCHOOL
+          <h1 className="text-6xl md:text-8xl font-display leading-tight">
+            <span className="font-bold text-gradient-primary">Vipanan+</span>{" "}
+            <span className="text-blue-600 text-5xl md:text-7xl">CALCUTTA BUSINESS SCHOOL</span>
           </h1>
           
           <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
