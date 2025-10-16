@@ -72,6 +72,7 @@ export default function Index() {
           
           <h1 className="text-6xl md:text-8xl font-display leading-tight">
             <span className="font-bold text-gradient-primary">Vipanan+</span>{" "}
+            <span className="block"> </span>
             <span className="text-blue-600 text-5xl md:text-7xl">CALCUTTA BUSINESS SCHOOL</span>
           </h1>
           
