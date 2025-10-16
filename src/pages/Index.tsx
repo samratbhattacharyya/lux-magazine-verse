@@ -182,29 +182,35 @@ export default function Index() {
       <section id="events" className="py-20 px-4 bg-card/30">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl font-display font-bold text-gradient-primary text-center mb-12">Upcoming Events</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {events.map((event) => (
-              <Card key={event.id} className="card-3d">
-                <CardContent className="p-6 space-y-4">
-                  {event.image_url && (
-                    <img src={event.image_url} alt={event.title} className="w-full h-48 object-cover rounded-md" />
-                  )}
-                  <h3 className="font-semibold text-xl">{event.title}</h3>
-                  <p className="text-sm text-muted-foreground">{event.description}</p>
-                  <div className="flex items-center gap-2 text-sm">
-                    <Calendar className="h-4 w-4 text-primary" />
-                    <span>{format(new Date(event.event_date), 'PPP')}</span>
-                  </div>
-                  {event.location && (
-                    <div className="flex items-center gap-2 text-sm">
-                      <MapPin className="h-4 w-4 text-primary" />
-                      <span>{event.location}</span>
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+          <Carousel className="w-full" opts={{ align: "start", loop: true }}>
+            <CarouselContent>
+              {events.map((event) => (
+                <CarouselItem key={event.id} className="md:basis-1/2 lg:basis-1/3">
+                  <Card className="card-3d">
+                    <CardContent className="p-6 space-y-4">
+                      {event.image_url && (
+                        <img src={event.image_url} alt={event.title} className="w-full h-48 object-cover rounded-md" />
+                      )}
+                      <h3 className="font-semibold text-xl">{event.title}</h3>
+                      <p className="text-sm text-muted-foreground">{event.description}</p>
+                      <div className="flex items-center gap-2 text-sm">
+                        <Calendar className="h-4 w-4 text-primary" />
+                        <span>{format(new Date(event.event_date), 'PPP')}</span>
+                      </div>
+                      {event.location && (
+                        <div className="flex items-center gap-2 text-sm">
+                          <MapPin className="h-4 w-4 text-primary" />
+                          <span>{event.location}</span>
+                        </div>
+                      )}
+                    </CardContent>
+                  </Card>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious />
+            <CarouselNext />
+          </Carousel>
         </div>
       </section>
 
