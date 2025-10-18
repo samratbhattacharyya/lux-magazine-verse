@@ -126,10 +126,6 @@ export default function Feed() {
                 Admin Dashboard
               </Button>
             )}
-            <Button variant="outline" onClick={signOut}>
-              <LogOut className="mr-2 h-4 w-4" />
-              Sign Out
-            </Button>
           </div>
         </div>
       </header>
