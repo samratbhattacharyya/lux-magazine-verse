@@ -31,6 +31,15 @@ export default function Index() {
   const [gallery, setGallery] = useState<GalleryItem[]>([]);
   const [events, setEvents] = useState<Event[]>([]);
 
+  const handleStartReading = async () => {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session) {
+      navigate('/feed');
+    } else {
+      navigate('/auth');
+    }
+  };
+
   useEffect(() => {
     // Check if user is already logged in
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -101,7 +110,7 @@ export default function Index() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-8">
             <Button
               size="lg"
-              onClick={() => navigate('/auth')}
+              onClick={handleStartReading}
               className="bg-primary hover:bg-primary/90 glow-primary text-lg px-8 py-6"
             >
               <BookOpen className="mr-2 h-5 w-5" />
@@ -110,7 +119,7 @@ export default function Index() {
             <Button
               size="lg"
               variant="outline"
-              onClick={() => navigate('/auth')}
+              onClick={handleStartReading}
               className="border-accent/50 hover:bg-accent/10 text-lg px-8 py-6"
             >
               <Users className="mr-2 h-5 w-5" />
