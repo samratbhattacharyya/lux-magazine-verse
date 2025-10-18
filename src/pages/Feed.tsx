@@ -110,7 +110,7 @@ export default function Feed() {
     <div className="min-h-screen">
       <Navigation />
       
-      <header className="border-b border-border/50 bg-card/50 backdrop-blur-sm sticky top-0 z-10 pt-16">
+      <header className="border-b border-border/50 bg-card/50 backdrop-blur-sm sticky top-0 z-10">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <div className="flex items-center gap-2">
             <Sparkles className="h-6 w-6 text-accent" />
